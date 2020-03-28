@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "128184802695",
+    "firebase_url": "https://chatflutter-3c92c.firebaseio.com",
+    "project_id": "chatflutter-3c92c",
+    "storage_bucket": "chatflutter-3c92c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:128184802695:android:7b692367539b7cfbb9c722",
+        "android_client_info": {
+          "package_name": "br.com.ciolfi.chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "128184802695-usas90v39lnje76tou73md5ugvkvmlsg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.ciolfi.chat",
+            "certificate_hash": "ae70e95ba3b7a07d20de092d498e21200346b4e2"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3dC289zm6dH3MqdIpV1XcvH8pABVpE3I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:128184802695:android:e2b6f20dbcaa0b1fb9c722",
+        "android_client_info": {
+          "package_name": "br.com.sthaynny.chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "128184802695-2ldv75f63qgr58kgu2eek6iosrg1g3u3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.sthaynny.chat",
+            "certificate_hash": "ae70e95ba3b7a07d20de092d498e21200346b4e2"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3dC289zm6dH3MqdIpV1XcvH8pABVpE3I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
