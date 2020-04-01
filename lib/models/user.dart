@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:mobx/mobx.dart';
 part 'user.g.dart';
 
@@ -14,10 +16,14 @@ abstract class _UsersBase with Store {
   @observable
   String name;
 
-  @Observable
+  @observable
   File imgFile;
 
-  @observable
+  @action
+  void setImage(File img){
+    imgFile=img;
+  }
+
   
 
 }
