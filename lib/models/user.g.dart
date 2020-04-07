@@ -77,6 +77,23 @@ mixin _$Users on _UsersBase, Store {
     }, _$imgFileAtom, name: '${_$imgFileAtom.name}_set');
   }
 
+  final _$urlAtom = Atom(name: '_UsersBase.url');
+
+  @override
+  String get url {
+    _$urlAtom.context.enforceReadPolicy(_$urlAtom);
+    _$urlAtom.reportObserved();
+    return super.url;
+  }
+
+  @override
+  set url(String value) {
+    _$urlAtom.context.conditionallyRunInAction(() {
+      super.url = value;
+      _$urlAtom.reportChanged();
+    }, _$urlAtom, name: '${_$urlAtom.name}_set');
+  }
+
   final _$_UsersBaseActionController = ActionController(name: '_UsersBase');
 
   @override
@@ -92,7 +109,7 @@ mixin _$Users on _UsersBase, Store {
   @override
   String toString() {
     final string =
-        'email: ${email.toString()},senha: ${senha.toString()},name: ${name.toString()},imgFile: ${imgFile.toString()}';
+        'email: ${email.toString()},senha: ${senha.toString()},name: ${name.toString()},imgFile: ${imgFile.toString()},url: ${url.toString()}';
     return '{$string}';
   }
 }

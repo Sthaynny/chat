@@ -1,19 +1,18 @@
 import 'package:chat/Cadastrar/user_cadastro.dart';
+import 'package:chat/RecuperarSenha/recuperarSenha.dart';
+import 'package:chat/chatScreen/chatScreen.dart';
+import 'package:chat/home/home.dart';
+import 'package:chat/models/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+final _loginController = TextEditingController();
+final _senhaController = TextEditingController();
 
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Realizar Cadastro',
-        backgroundColor: Color.fromRGBO(65, 176, 255, 1),
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => UserCadastro()));
-        },
-        child: Icon(Icons.person_add),
-      ),
       body: Container(
         padding: EdgeInsets.only(top: 80, left: 20, right: 20),
         color: Colors.white,
@@ -28,6 +27,7 @@ class LoginPage extends StatelessWidget {
               height: 40,
             ),
             TextFormField(
+              controller: _loginController,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -43,6 +43,7 @@ class LoginPage extends StatelessWidget {
               height: 15,
             ),
             TextFormField(
+              controller: _senhaController,
               keyboardType: TextInputType.text,
               obscureText: true,
               decoration: InputDecoration(
@@ -55,7 +56,7 @@ class LoginPage extends StatelessWidget {
                       fontSize: 20)),
               style: TextStyle(fontSize: 20),
             ),
-            /*Container(
+            Container(
               padding: EdgeInsets.only(top: 12),
               height: 40,
               alignment: Alignment.bottomRight,
@@ -63,11 +64,17 @@ class LoginPage extends StatelessWidget {
                 child: Text("Recuperar Senha",
                     textAlign: TextAlign.right,
                     style: TextStyle(color: Color.fromRGBO(255, 89, 76, 0.7))),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RecuperarPasswordPage()),
+                  );
+                },
               ),
-            ),*/
+            ),
             SizedBox(
-              height: 40,
+              height: 80,
             ),
             Container(
               height: 60,
@@ -104,26 +111,38 @@ class LoginPage extends StatelessWidget {
                       )
                     ],
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    QuerySnapshot snapshot = await Firestore.instance
+                        .collection("users")
+                        .getDocuments();
+                    snapshot.documents.forEach((user) {
+                      if (_loginController.text == user.data["email"] &&
+                          _senhaController.text == user.data['senha']) {
+                        Users userLogin = Users();
+                        userLogin.toMap(user.data);
+                        userLogin.printString();
+
+                        _refreshLogin();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ChatScreen(
+                                      userId: user.documentID,
+                                      user: userLogin,
+                                    )));
+                      }
+                    });
+                  },
                 ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 20),
-              height: 60,
-              alignment: Alignment.center,
-              child: FlatButton(
-                child: Text(
-                  "Recuperar Senha",
-                  textAlign: TextAlign.right,
-                  style: TextStyle(color: Color.fromRGBO(255, 89, 76, 0.7)),
-                ),
-                onPressed: () {},
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _refreshLogin() {
+    _loginController.text = _senhaController.text = '';
   }
 }

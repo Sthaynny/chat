@@ -3,10 +3,20 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class TextComposer extends StatefulWidget {
-  TextComposer(this.sendMenssage);
+import 'package:chat/models/user.dart';
 
-  final Function({String text, File imgFile}) sendMenssage;
+class TextComposer extends StatefulWidget {
+  Users user;
+  String userId;
+  TextComposer({
+    Key key,
+    this.user,
+    this.userId,
+    this.sendMenssage,
+  }) : super(key: key);
+
+  final Function({String text, File imgFile, Users user, String userId})
+      sendMenssage;
   @override
   _TextComposerState createState() => _TextComposerState();
 }
@@ -22,14 +32,21 @@ class _TextComposerState extends State<TextComposer> {
       margin: const EdgeInsets.symmetric(horizontal: 8),
       child: Row(
         children: <Widget>[
-          IconButton(icon: Icon(Icons.photo_camera), onPressed: ()async {
-            final File imgFile = await ImagePicker.pickImage(source: ImageSource.camera);
-            if(imgFile==null){
-              return;
-            }else{
-              widget.sendMenssage(imgFile: imgFile);
-            }
-          }),
+          IconButton(
+              icon: Icon(Icons.photo_camera),
+              onPressed: () async {
+                final File imgFile =
+                    await ImagePicker.pickImage(source: ImageSource.camera);
+                if (imgFile == null) {
+                  return;
+                } else {
+                  widget.sendMenssage(
+                    imgFile: imgFile,
+                    user: widget.user,
+                    userId: widget.userId,
+                  );
+                }
+              }),
           Expanded(
               child: TextField(
             controller: _textController,
@@ -41,7 +58,7 @@ class _TextComposerState extends State<TextComposer> {
               });
             },
             onSubmitted: (text) {
-              widget.sendMenssage(text:text);
+              widget.sendMenssage(text: text);
               _textController.clear();
               reset();
             },
@@ -50,7 +67,11 @@ class _TextComposerState extends State<TextComposer> {
             icon: Icon(Icons.send),
             onPressed: _isComposer
                 ? () {
-                    widget.sendMenssage(text:_textController.text);
+                    widget.sendMenssage(
+                      text: _textController.text,
+                      user: widget.user,
+                      userId: widget.userId,
+                    );
                     _textController.clear();
                     reset();
                   }
